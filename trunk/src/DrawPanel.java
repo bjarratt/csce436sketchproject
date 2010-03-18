@@ -19,6 +19,8 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
 	double totalTime;
 	
 	Sketch s; // sketch object to record the strokes drawn
+        
+        Persona Stan = new Persona(5);
 	
 	DrawPanel()
 	{		
@@ -53,8 +55,12 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
 
 	
 	public void mouseReleased(MouseEvent e) 
-	{		
-		this.repaint();		
+	{	
+            if(s.strokeList.size() >0){
+                Stroke modifiedStroke = Stan.Morph(s.strokeList.get(s.strokeList.size()-1));
+                s.strokeList.set(s.strokeList.size()-1, modifiedStroke);
+            }
+            this.repaint();
 	}
 
 	/**
@@ -68,7 +74,7 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
 		double t = System.currentTimeMillis();		
 		
 		// Creating a point
-		Point pnt = new Point(x,y,t);
+		Point pnt = new Point(x,y,t,1);
 		
 		// Adding the point to the current stroke
 		Stroke currStroke = s.strokeList.get(s.strokeList.size()-1);		

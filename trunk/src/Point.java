@@ -11,8 +11,14 @@ public class Point
 {
 	double x_coor=0; // x co - ordinate
 	double y_coor=0; // y co - ordinate
-	double time =0; // time 
-	String id = ""; // Unique id 
+	double time =0; // time
+        double pressure = 0; //pressure
+	String id = ""; // Unique id
+
+
+        Point(){
+
+        }
 	
 	/**
 	 * Point constructor - useful while reading the xml file
@@ -21,11 +27,12 @@ public class Point
 	 * @param t - time component
 	 * @param id - unique ID
 	 */
-	Point(double x, double y, double t, String id)
+	Point(double x, double y, double t, double p, String id)
 	{
 		x_coor=x;
 		y_coor=y;
 		time=t;
+                pressure=p;
 		this.id = id;
 	}
 	
@@ -35,13 +42,15 @@ public class Point
 	 * @param y - y co ordinate
 	 * @param t - time component
 	 */
-	Point(double x, double y, double t)
+	Point(double x, double y, double t, double p)
 	{
 		x_coor=x;
 		y_coor=y;
 		time=t;
+                pressure = p;
 		this.id = UUID.randomUUID().toString();
 	}
+
 	
 	
 	/**
