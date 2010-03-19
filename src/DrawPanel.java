@@ -5,6 +5,8 @@ import java.io.File;
 
 import javax.swing.*;
 
+import jpen.*;
+
 /**
  * Simple sketch panel - to draw / record user sketch 
  * - only x , y , time data recorded
@@ -55,11 +57,16 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
 
 	
 	public void mouseReleased(MouseEvent e) 
-	{	
+	{
             if(s.strokeList.size() >0){
                 Stroke modifiedStroke = Stan.Morph(s.strokeList.get(s.strokeList.size()-1));
+                modifiedStroke.calculateStartingAngles();
+                modifiedStroke.setVectors();
                 s.strokeList.set(s.strokeList.size()-1, modifiedStroke);
             }
+
+
+
             this.repaint();
 	}
 
