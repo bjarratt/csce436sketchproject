@@ -24,6 +24,14 @@ public class Persona {
     public Stroke Morph(Stroke s){
         Stroke newStroke = new Stroke();
 
+        newStroke = applyJitter(s);
+
+        return newStroke;
+    }
+
+    public Stroke applyJitter(Stroke s){
+        Stroke newStroke = new Stroke();
+        
         for(int i = 0; i < s.dataPoints.size(); i++){
             Point p = new Point();
             p.time = s.dataPoints.get(i).time;
