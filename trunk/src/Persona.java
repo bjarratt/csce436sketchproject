@@ -11,20 +11,30 @@ import java.util.Random;
  */
 public class Persona {
     
-    double jitter = 0;
+    double jitter = -1;
+
+    int numSegmentsToClamp = -1;
+    
     Random rand = new Random();
 
-    Persona(double jitter){
-        this.jitter=jitter;
+    Persona(double jitter, int numSegmentsToClamp){
+        this.jitter = jitter;
+        this.numSegmentsToClamp = numSegmentsToClamp;
     }
 
     Persona(){
     }
 
     public Stroke Morph(Stroke s){
-        Stroke newStroke = new Stroke();
+        Stroke newStroke = s;
 
-        newStroke = applyJitter(s);
+        if (numSegmentsToClamp > 0){
+            newStroke = clampToFixedSegments(newStroke);
+        }
+        
+        if (jitter > 0){
+            newStroke = applyJitter(newStroke);
+        }
 
         return newStroke;
     }
@@ -99,6 +109,38 @@ public class Persona {
             }
         }
         return averagedStroke;
+    }
+
+    public Stroke clampToFixedSegments(Stroke s){
+        if (s.dataPoints.size() < 3 || (s.dataPoints.size()-1) <= numSegmentsToClamp){
+            return s;
+        }
+        
+        Stroke newStroke = new Stroke();
+
+        double startTime = s.dataPoints.get(0).time;
+        double endTime = s.dataPoints.get(s.dataPoints.size()-1).time;
+        double deltaT = endTime - startTime;
+
+        double tIncr = (deltaT / (double)numSegmentsToClamp);
+        double expectedT = tIncr + startTime;
+        Point currentClosestPoint = s.dataPoints.get(0);
+        newStroke.dataPoints.add(currentClosestPoint);
+
+        for(int i = 1; i < s.dataPoints.size(); i++){
+            if (Math.abs(s.dataPoints.get(i).time - expectedT) < Math.abs(currentClosestPoint.time - expectedT)){
+                currentClosestPoint = s.dataPoints.get(i);
+            }
+            else{
+                newStroke.dataPoints.add(currentClosestPoint);
+                expectedT += tIncr;
+                currentClosestPoint = s.dataPoints.get(i);
+            }
+        }
+
+        newStroke.dataPoints.add(s.dataPoints.get(s.dataPoints.size()-1));
+
+        return newStroke;
     }
 
 }
