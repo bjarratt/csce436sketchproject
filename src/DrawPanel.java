@@ -22,7 +22,7 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
 	
 	Sketch s; // sketch object to record the strokes drawn
         
-        Persona Stan = new Persona(10);
+        Persona Stan = new Persona(-1,8);
 	
 	DrawPanel()
 	{		
