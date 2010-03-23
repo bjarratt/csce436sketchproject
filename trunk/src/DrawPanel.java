@@ -24,8 +24,9 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
         
 
         double jitter = -1;
-        int numSegmentsToClamp = 8;
-        boolean strobe = true;
+        int numSegmentsToClamp = -1;
+        boolean strobe = false;
+        boolean colorBand = true;
 
         int colorsIndex = 0;
         Color[] colors = {Color.RED,Color.ORANGE,Color.YELLOW,Color.GREEN,Color.BLUE,Color.MAGENTA};
@@ -131,12 +132,17 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
 					int y = (int) p.y_coor;
 					int x1 = (int) p1.x_coor;
 					int y1 = (int) p1.y_coor;
-					if(strobe){
+					if(strobe && !colorBand){
                                             if(colorsIndex > colors.length-1)
                                                 colorsIndex = 0;
                                             Color col = colors[colorsIndex];
                                             g2d.setColor(col);
                                             colorsIndex++;
+                                        }
+                                        else if(!strobe && colorBand){
+                                            int bandHeight = 600/colors.length;
+                                            int band = y/bandHeight;
+                                            g2d.setColor(colors[band]);
                                         }
 					g2d.drawLine(x,y,x1,y1);
 
