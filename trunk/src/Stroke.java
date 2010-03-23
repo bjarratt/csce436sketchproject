@@ -21,7 +21,14 @@ public class Stroke
         double end_sin = 0; //sine of the starting angle        
         Vector end_vector;//ending vector
 
+
+        double x_max; //maximum x-value of the stroke
+        double x_min; //minimum x-value of the stroke
+        double y_max; //maximum y-value of the stroke
+        double y_min; //minimum y-value of the stroke
+
         double avg_slope = 0; //avg slope of all segments in stroke
+
 
 	/**
 	 * Constructor to create stroke with unique ID
@@ -81,6 +88,80 @@ public class Stroke
             
         }
 
+        double get_XMin(){
+            x_min = dataPoints.get(0).x_coor;
+            for(int i=0; i<dataPoints.size(); i++){
+                if(dataPoints.get(i).x_coor < x_min){
+                    x_min = dataPoints.get(i).x_coor;
+                }
+                else
+                    continue;
+            }
+            return x_min;
+        }
+
+        double get_XMax(){
+            x_max = dataPoints.get(0).x_coor;
+            for(int i=0; i<dataPoints.size(); i++){
+                if(dataPoints.get(i).x_coor > x_max){
+                    x_max = dataPoints.get(i).x_coor;
+                }
+                else
+                    continue;
+            }
+            return x_max;
+        }
+
+        double get_YMin(){
+            y_min = dataPoints.get(0).y_coor;
+            for(int i=0; i<dataPoints.size(); i++){
+                if(dataPoints.get(i).y_coor < y_min){
+                    y_min = dataPoints.get(i).y_coor;
+                }
+                else
+                    continue;
+            }
+            return y_min;
+        }
+
+        double get_YMax(){
+            y_max = dataPoints.get(0).y_coor;
+            for(int i=0; i<dataPoints.size(); i++){
+                if(dataPoints.get(i).y_coor > y_max){
+                    y_max = dataPoints.get(i).y_coor;
+                }
+                else
+                    continue;
+            }
+            return y_max;
+        }
+
+        double diagonalOfStrokeBoundingBox(){
+            double diagonal = 0;
+            double val1, val2, ymax, ymin, xmax, xmin;
+            ymax = get_YMax();
+            ymin = get_YMin();
+            xmax = get_XMax();
+            xmin = get_XMin();
+            val1 = Math.pow((ymax-ymin), 2.0);
+            val2 = Math.pow((xmax-xmin), 2.0);
+
+            diagonal = Math.sqrt(val1+val2);
+
+            return diagonal;
+    }
+
+        double getEuclideanDistance(){
+            double firstx = dataPoints.get(0).x_coor;
+            double lastx = dataPoints.get(dataPoints.size()-1).x_coor;
+            double firsty = dataPoints.get(0).y_coor;
+            double lasty = dataPoints.get(dataPoints.size()-1).y_coor;
+            double val1 = Math.pow((lastx-firstx), 2.0);
+            double val2 = Math.pow((lasty-firsty), 2.0);
+            double distance = Math.sqrt(val1+val2);
+
+            return distance;
+        }
         void calcAvgSlope(){
             if(dataPoints.size() > 2){
                 double sum = 0;

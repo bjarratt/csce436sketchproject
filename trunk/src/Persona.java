@@ -36,11 +36,10 @@ public class Persona {
         if (numSegmentsToClamp > 0){
             newStroke = clampToFixedSegments(newStroke);
         }
-        
+
         if (jitter > 0){
             newStroke = applyJitter(newStroke);
         }
-
         /*if (numSegmentsToStrobe > 0){
             newStroke = rainbowStrokes(newStroke);
         }*/
@@ -151,7 +150,6 @@ public class Persona {
 
         return newStroke;
     }
-
     /*public Stroke rainbowStrokes(Stroke s){
         if (s.dataPoints.size() < 3 || (s.dataPoints.size()-1) <= numSegmentsToStrobe){
             return s;
