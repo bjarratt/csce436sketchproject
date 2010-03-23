@@ -22,8 +22,16 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
 	
 	Sketch s; // sketch object to record the strokes drawn
         
-        Persona Stan = new Persona(-1,3);
-	
+
+        double jitter = -1;
+        int numSegmentsToClamp = -1;
+        int numSegmentsToStrobe = 8;
+
+        int colorsIndex = 0;
+        Color[] colors = {Color.RED,Color.ORANGE,Color.YELLOW,Color.GREEN,Color.BLUE,Color.MAGENTA};
+   
+        Persona Stan = new Persona(jitter,numSegmentsToClamp,numSegmentsToStrobe);
+
 	DrawPanel()
 	{		
 		s = new Sketch();	
@@ -64,8 +72,6 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
                 modifiedStroke.setVectors();
                 s.strokeList.set(s.strokeList.size()-1, modifiedStroke);
             }
-
-
 
             this.repaint();
 	}
@@ -121,8 +127,15 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
 					int y = (int) p.y_coor;
 					int x1 = (int) p1.x_coor;
 					int y1 = (int) p1.y_coor;
-						
+					if(numSegmentsToStrobe>0){
+                                            if(colorsIndex > colors.length-1)
+                                                colorsIndex = 0;
+                                            Color col = colors[colorsIndex];
+                                            g2d.setColor(col);
+                                            colorsIndex++;
+                                        }
 					g2d.drawLine(x,y,x1,y1);
+
 				}
 			}
 		}catch(NullPointerException e){}
