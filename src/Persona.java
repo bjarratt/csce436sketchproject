@@ -19,7 +19,7 @@ public class Persona {
 
     Random rand = new Random();
 
-    Persona(double jitter, int numSegmentsToClamp){//, int numSegmentsToStrobe){
+    Persona(double jitter, int numSegmentsToClamp){
         this.jitter = jitter;
         this.numSegmentsToClamp = numSegmentsToClamp;
         //this.numSegmentsToStrobe = numSegmentsToStrobe;
@@ -150,36 +150,4 @@ public class Persona {
 
         return newStroke;
     }
-    /*public Stroke rainbowStrokes(Stroke s){
-        if (s.dataPoints.size() < 3 || (s.dataPoints.size()-1) <= numSegmentsToStrobe){
-            return s;
-        }
-
-        Stroke newStroke = new Stroke();
-
-        double startTime = s.dataPoints.get(0).time;
-        double endTime = s.dataPoints.get(s.dataPoints.size()-1).time;
-        double deltaT = endTime - startTime;
-
-        double tIncr = (deltaT / (double)numSegmentsToStrobe);
-        double expectedT = tIncr + startTime;
-        Point currentClosestPoint = s.dataPoints.get(0);
-        newStroke.dataPoints.add(currentClosestPoint);
-
-        for(int i = 1; i < s.dataPoints.size(); i++){
-            if (Math.abs(s.dataPoints.get(i).time - expectedT) <= Math.abs(currentClosestPoint.time - expectedT)){
-                currentClosestPoint = s.dataPoints.get(i);
-            }
-            else{
-                newStroke.dataPoints.add(currentClosestPoint);
-                expectedT += tIncr;
-                currentClosestPoint = s.dataPoints.get(i);
-            }
-        }
-
-        newStroke.dataPoints.add(s.dataPoints.get(s.dataPoints.size()-1));
-
-        return newStroke;
-    }*/
-
 }
