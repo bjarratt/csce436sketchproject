@@ -24,13 +24,13 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
         
 
         double jitter = -1;
-        int numSegmentsToClamp = -1;
-        int numSegmentsToStrobe = 8;
+        int numSegmentsToClamp = 8;
+        boolean strobe = true;
 
         int colorsIndex = 0;
         Color[] colors = {Color.RED,Color.ORANGE,Color.YELLOW,Color.GREEN,Color.BLUE,Color.MAGENTA};
    
-        Persona Stan = new Persona(jitter,numSegmentsToClamp,numSegmentsToStrobe);
+        Persona Stan = new Persona(jitter,numSegmentsToClamp);
 
 	DrawPanel()
 	{		
@@ -127,7 +127,7 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
 					int y = (int) p.y_coor;
 					int x1 = (int) p1.x_coor;
 					int y1 = (int) p1.y_coor;
-					if(numSegmentsToStrobe>0){
+					if(strobe){
                                             if(colorsIndex > colors.length-1)
                                                 colorsIndex = 0;
                                             Color col = colors[colorsIndex];
@@ -138,6 +138,7 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
 
 				}
 			}
+                        colorsIndex=0;
 		}catch(NullPointerException e){}
 		
 	}

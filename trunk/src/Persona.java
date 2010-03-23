@@ -15,14 +15,14 @@ public class Persona {
 
     int numSegmentsToClamp = -1;
 
-    int numSegmentsToStrobe = -1;
+    //int numSegmentsToStrobe = -1;
 
     Random rand = new Random();
 
-    Persona(double jitter, int numSegmentsToClamp, int numSegmentsToStrobe){
+    Persona(double jitter, int numSegmentsToClamp){//, int numSegmentsToStrobe){
         this.jitter = jitter;
         this.numSegmentsToClamp = numSegmentsToClamp;
-        this.numSegmentsToStrobe = numSegmentsToStrobe;
+        //this.numSegmentsToStrobe = numSegmentsToStrobe;
     }
 
     Persona(){
@@ -41,9 +41,9 @@ public class Persona {
             newStroke = applyJitter(newStroke);
         }
 
-        if (numSegmentsToStrobe > 0){
+        /*if (numSegmentsToStrobe > 0){
             newStroke = rainbowStrokes(newStroke);
-        }
+        }*/
 
         return newStroke;
     }
@@ -152,7 +152,7 @@ public class Persona {
         return newStroke;
     }
 
-    public Stroke rainbowStrokes(Stroke s){
+    /*public Stroke rainbowStrokes(Stroke s){
         if (s.dataPoints.size() < 3 || (s.dataPoints.size()-1) <= numSegmentsToStrobe){
             return s;
         }
@@ -182,6 +182,6 @@ public class Persona {
         newStroke.dataPoints.add(s.dataPoints.get(s.dataPoints.size()-1));
 
         return newStroke;
-    }
+    }*/
 
 }
