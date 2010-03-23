@@ -70,6 +70,10 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
                 Stroke modifiedStroke = Stan.Morph(s.strokeList.get(s.strokeList.size()-1));
                 modifiedStroke.calculateStartingAngles();
                 modifiedStroke.setVectors();
+                System.out.println("diagonal of bounding box: " +
+                        modifiedStroke.diagonalOfStrokeBoundingBox());
+                System.out.println("euclidean distance between endpoints: " +
+                        modifiedStroke.getEuclideanDistance());
                 s.strokeList.set(s.strokeList.size()-1, modifiedStroke);
             }
 
