@@ -20,7 +20,9 @@ public class Stroke
         double end_cos = 0; //cosine of the starting angle
         double end_sin = 0; //sine of the starting angle        
         Vector end_vector;//ending vector
-	
+
+        double avg_slope = 0; //avg slope of all segments in stroke
+
 	/**
 	 * Constructor to create stroke with unique ID
 	 * @param dataPoints - collection of points 
@@ -77,6 +79,29 @@ public class Stroke
             }
 
             
+        }
+
+        void calcAvgSlope(){
+            if(dataPoints.size() > 2){
+                double sum = 0;
+                double points = 0;
+                for(int c = 1; c<dataPoints.size(); c++){
+                    double x0 = dataPoints.get(c-1).x_coor;
+                    double y0 = dataPoints.get(c-1).y_coor;
+                    double x1 = dataPoints.get(c).x_coor;
+                    double y1 = dataPoints.get(c).y_coor;
+                    double slope = (y1-y0)/(x1-x0);
+                    //this prevents averaging with infinity
+                    if(slope>0 && slope <1000){
+                        sum += slope;      
+                        points++;
+                    }     
+                }
+
+                avg_slope = sum/points; 
+                //System.out.println(avg_slope);
+            }
+           
         }
 
         void setVectors(){
