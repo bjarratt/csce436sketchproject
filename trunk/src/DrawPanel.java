@@ -21,17 +21,19 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
 	double totalTime;
 	
 	Sketch s; // sketch object to record the strokes drawn
-        
 
         double jitter = -1;
         int numSegmentsToClamp = -1;
-        boolean strobe = false;
-        boolean colorBand = true;
+        boolean rainbow = false;
+        boolean discoPen = true;
+        boolean colorBand = false;
+        boolean doubleStroke = false;
+        boolean mirrorStroke = false;
 
         int colorsIndex = 0;
         Color[] colors = {Color.RED,Color.ORANGE,Color.YELLOW,Color.GREEN,Color.BLUE,Color.MAGENTA};
    
-        Persona Stan = new Persona(jitter,numSegmentsToClamp);
+        Persona Stan = new Persona(jitter,numSegmentsToClamp,doubleStroke,mirrorStroke);
 
 	DrawPanel()
 	{		
@@ -66,11 +68,13 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
 
 	
 	public void mouseReleased(MouseEvent e) 
-	{
+        {
             if(s.strokeList.size() >0){
+                Stan.windowWidth = this.getWidth();
                 Stroke modifiedStroke = Stan.Morph(s.strokeList.get(s.strokeList.size()-1));
                 modifiedStroke.calculateStartingAngles();
                 modifiedStroke.setVectors();
+
                 System.out.println("diagonal of bounding box: " +
                         modifiedStroke.diagonalOfStrokeBoundingBox());
                 System.out.println("euclidean distance between endpoints: " +
@@ -78,6 +82,15 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
                 System.out.println("total stroke length: " +
                         modifiedStroke.getStrokeLength());
                 s.strokeList.set(s.strokeList.size()-1, modifiedStroke);
+                System.out.println("average slope: " +
+                        modifiedStroke.getAvgSlope());
+                System.out.println();
+
+                if(doubleStroke || mirrorStroke){
+                    s.strokeList.add(modifiedStroke);
+                }
+                else
+                    s.strokeList.set(s.strokeList.size()-1, modifiedStroke);
             }
 
             this.repaint();
@@ -106,16 +119,17 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
 	 * Function to draw the strokes on the panel
 	 * @param g2d
 	 */
+
 	public void drawRawDiagram(Graphics2D g2d)
 	{
 		
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-		    
-			
+		    		
 		ArrayList<Stroke> sl = s.strokeList;
 		
 		// Setting the color of the sketch
-		g2d.setColor(Color.BLACK);		
+               
+                g2d.setColor(Color.BLACK);
 		
 		try
 		{
@@ -134,25 +148,31 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
 					int y = (int) p.y_coor;
 					int x1 = (int) p1.x_coor;
 					int y1 = (int) p1.y_coor;
-					if(strobe && !colorBand){
+					if((discoPen || rainbow)&& !colorBand){
+                                            
                                             if(colorsIndex > colors.length-1)
                                                 colorsIndex = 0;
                                             Color col = colors[colorsIndex];
                                             g2d.setColor(col);
                                             colorsIndex++;
                                         }
-                                        else if(!strobe && colorBand){
-                                            int bandHeight = 600/colors.length;
+                                        else if(!(discoPen || rainbow) && colorBand){
+                                            int bandHeight = this.getHeight()/colors.length;
                                             int band = y/bandHeight;
+                                            if(band>=colors.length)
+                                                band = colors.length-1;
+                                            else if(band<0){
+                                                band = 0;
+                                            }
                                             g2d.setColor(colors[band]);
                                         }
 					g2d.drawLine(x,y,x1,y1);
 
 				}
 			}
-                        colorsIndex=0;
-		}catch(NullPointerException e){}
-		
+                        if(rainbow)
+                            colorsIndex=0;//take this line out to discoPen while drawing.
+		}catch(NullPointerException e){}	
 	}
 	
 	

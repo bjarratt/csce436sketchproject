@@ -15,14 +15,18 @@ public class Persona {
 
     int numSegmentsToClamp = -1;
 
-    //int numSegmentsToStrobe = -1;
+    boolean doubleStroke = false;
 
+    boolean mirrorStroke = false;
+
+    int windowWidth = 0;
     Random rand = new Random();
 
-    Persona(double jitter, int numSegmentsToClamp){
+    Persona(double jitter, int numSegmentsToClamp, boolean doubleStroke, boolean mirrorStroke){
         this.jitter = jitter;
         this.numSegmentsToClamp = numSegmentsToClamp;
-        //this.numSegmentsToStrobe = numSegmentsToStrobe;
+        this.doubleStroke = doubleStroke;
+        this.mirrorStroke = mirrorStroke;
     }
 
     Persona(){
@@ -31,8 +35,6 @@ public class Persona {
     public Stroke Morph(Stroke s){
         Stroke newStroke = s;
 
-        s.calcAvgSlope();
-
         if (numSegmentsToClamp > 0){
             newStroke = clampToFixedSegments(newStroke);
         }
@@ -40,9 +42,14 @@ public class Persona {
         if (jitter > 0){
             newStroke = applyJitter(newStroke);
         }
-        /*if (numSegmentsToStrobe > 0){
-            newStroke = rainbowStrokes(newStroke);
-        }*/
+
+        if (doubleStroke){
+            newStroke = doubleStroke(newStroke);
+        }
+
+        if (mirrorStroke){
+            newStroke = mirrorStroke(newStroke);
+        }
 
         return newStroke;
     }
@@ -148,6 +155,32 @@ public class Persona {
 
         newStroke.dataPoints.add(s.dataPoints.get(s.dataPoints.size()-1));
 
+        return newStroke;
+    }
+
+    public Stroke doubleStroke(Stroke s){
+
+        Stroke newStroke = new Stroke();
+
+        for(int c = 0;c<s.dataPoints.size();c++){
+            double newX = s.dataPoints.get(c).x_coor + 10;
+
+            Point dataPoint = new Point(newX,s.dataPoints.get(c).y_coor,0,0);
+            newStroke.dataPoints.add(dataPoint);
+        }
+        return newStroke;
+    }
+
+    public Stroke mirrorStroke(Stroke s){
+
+        Stroke newStroke = new Stroke();
+
+        for(int c = 0;c<s.dataPoints.size();c++){
+            double newX = windowWidth - s.dataPoints.get(c).x_coor;
+
+            Point dataPoint = new Point(newX,s.dataPoints.get(c).y_coor,0,0);
+            newStroke.dataPoints.add(dataPoint);
+        }
         return newStroke;
     }
 }

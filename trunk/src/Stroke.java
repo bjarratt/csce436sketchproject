@@ -175,7 +175,7 @@ public class Stroke
             return length;
         }
 
-        void calcAvgSlope(){
+        double getAvgSlope(){
             if(dataPoints.size() > 2){
                 double sum = 0;
                 double points = 0;
@@ -184,18 +184,22 @@ public class Stroke
                     double y0 = dataPoints.get(c-1).y_coor;
                     double x1 = dataPoints.get(c).x_coor;
                     double y1 = dataPoints.get(c).y_coor;
-                    double slope = (y1-y0)/(x1-x0);
+                    double slope = (-1*(y1-y0))/(x1-x0);
                     //this prevents averaging with infinity
-                    if(slope>0 && slope <1000){
+                    if(slope>-1000 && slope <1000){
                         sum += slope;      
                         points++;
                     }     
                 }
-
-                avg_slope = sum/points; 
+                
+                avg_slope = sum/points;
+                return avg_slope;
+                
+                
                 //System.out.println(avg_slope);
             }
-           
+            else
+                return 0;
         }
 
         void setVectors(){
