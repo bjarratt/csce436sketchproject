@@ -137,16 +137,14 @@ public class Stroke
         }
 
         double diagonalOfStrokeBoundingBox(){
-            double diagonal = 0;
-            double val1, val2, ymax, ymin, xmax, xmin;
-            ymax = get_YMax();
-            ymin = get_YMin();
-            xmax = get_XMax();
-            xmin = get_XMin();
-            val1 = Math.pow((ymax-ymin), 2.0);
-            val2 = Math.pow((xmax-xmin), 2.0);
+            double ymax = get_YMax();
+            double ymin = get_YMin();
+            double xmax = get_XMax();
+            double xmin = get_XMin();
+            double val1 = Math.pow((ymax-ymin), 2.0);
+            double val2 = Math.pow((xmax-xmin), 2.0);
 
-            diagonal = Math.sqrt(val1+val2);
+            double diagonal = Math.sqrt(val1+val2);
 
             return diagonal;
     }
@@ -162,6 +160,21 @@ public class Stroke
 
             return distance;
         }
+
+        double getStrokeLength(){
+            double length = 0;
+            for(int i=1; i<dataPoints.size(); i++){
+                double firstx = dataPoints.get(i-1).x_coor;
+                double lastx = dataPoints.get(i).x_coor;
+                double firsty = dataPoints.get(i-1).y_coor;
+                double lasty = dataPoints.get(i).y_coor;
+                double val1 = Math.pow((lastx-firstx), 2.0);
+                double val2 = Math.pow((lasty-firsty), 2.0);
+                length += Math.sqrt(val1+val2);
+            }
+            return length;
+        }
+
         void calcAvgSlope(){
             if(dataPoints.size() > 2){
                 double sum = 0;

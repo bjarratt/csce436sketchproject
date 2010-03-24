@@ -75,6 +75,8 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
                         modifiedStroke.diagonalOfStrokeBoundingBox());
                 System.out.println("euclidean distance between endpoints: " +
                         modifiedStroke.getEuclideanDistance());
+                System.out.println("total stroke length: " +
+                        modifiedStroke.getStrokeLength());
                 s.strokeList.set(s.strokeList.size()-1, modifiedStroke);
             }
 
