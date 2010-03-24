@@ -34,7 +34,7 @@ public class Persona {
 
     public Stroke Morph(Stroke s){
         Stroke newStroke = s;
-
+        
         if (numSegmentsToClamp > 0){
             newStroke = clampToFixedSegments(newStroke);
         }
@@ -61,6 +61,7 @@ public class Persona {
             Point p = new Point();
             p.time = s.dataPoints.get(i).time;
             p.pressure = s.dataPoints.get(i).pressure;
+            p.speed = s.dataPoints.get(i).speed;
 
             boolean add_value = rand.nextBoolean();
             double change = rand.nextDouble();
@@ -94,6 +95,7 @@ public class Persona {
         double y;
         double time;
         double pressure;
+        double speed;
 
         //linear Subdivision
         for(int i = 0; i < s.dataPoints.size(); i++){
@@ -104,8 +106,9 @@ public class Persona {
                 y = (s.dataPoints.get(i).y_coor + s.dataPoints.get(i+1).y_coor)/2;
                 time = (s.dataPoints.get(i).time + s.dataPoints.get(i+1).time)/2;
                 pressure = (s.dataPoints.get(i).pressure + s.dataPoints.get(i+1).pressure)/2;
+                speed = (s.dataPoints.get(i).speed + s.dataPoints.get(i+1).speed)/2;
 
-                Point p = new Point(x, y, time, pressure);
+                Point p = new Point(x, y, time, pressure, speed);
                 subdividedStroke.dataPoints.add(p);
             }
         }
@@ -118,8 +121,9 @@ public class Persona {
                 y = (subdividedStroke.dataPoints.get(i).y_coor + subdividedStroke.dataPoints.get(i+1).y_coor)/2;
                 time = (subdividedStroke.dataPoints.get(i).time + subdividedStroke.dataPoints.get(i+1).time)/2;
                 pressure = (subdividedStroke.dataPoints.get(i).pressure + subdividedStroke.dataPoints.get(i+1).pressure)/2;
+                speed = (subdividedStroke.dataPoints.get(i).speed + subdividedStroke.dataPoints.get(i+1).speed)/2;
 
-                Point p = new Point(x, y, time, pressure);
+                Point p = new Point(x, y, time, pressure, speed);
                 averagedStroke.dataPoints.add(p);
             }
         }
@@ -165,7 +169,7 @@ public class Persona {
         for(int c = 0;c<s.dataPoints.size();c++){
             double newX = s.dataPoints.get(c).x_coor + 10;
 
-            Point dataPoint = new Point(newX,s.dataPoints.get(c).y_coor,0,0);
+            Point dataPoint = new Point(newX,s.dataPoints.get(c).y_coor,0,0,s.dataPoints.get(c).speed);
             newStroke.dataPoints.add(dataPoint);
         }
         return newStroke;
@@ -178,7 +182,7 @@ public class Persona {
         for(int c = 0;c<s.dataPoints.size();c++){
             double newX = windowWidth - s.dataPoints.get(c).x_coor;
 
-            Point dataPoint = new Point(newX,s.dataPoints.get(c).y_coor,0,0);
+            Point dataPoint = new Point(newX,s.dataPoints.get(c).y_coor,0,0,s.dataPoints.get(c).speed);
             newStroke.dataPoints.add(dataPoint);
         }
         return newStroke;
