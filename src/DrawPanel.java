@@ -22,7 +22,7 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
 	
 	Sketch s; // sketch object to record the strokes drawn
 
-        double jitter = -1;
+        double jitter = 8;
         int numSegmentsToClamp = -1;
         boolean rainbow = false;
         boolean discoPen = true;
@@ -106,11 +106,30 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
 		int y=e.getY();
 		double t = System.currentTimeMillis();		
 		
-		// Creating a point
-		Point pnt = new Point(x,y,t,1);
-		
 		// Adding the point to the current stroke
-		Stroke currStroke = s.strokeList.get(s.strokeList.size()-1);		
+        
+		Stroke currStroke = s.strokeList.get(s.strokeList.size()-1);
+
+        Point pnt;
+        if (currStroke.dataPoints.size() > 0){
+            Point prevPoint = (currStroke.dataPoints.get(currStroke.dataPoints.size()-1));
+            double positionDelta = Math.sqrt((x-prevPoint.x_coor)*(x-prevPoint.x_coor) +
+                                             (y-prevPoint.y_coor)*(y-prevPoint.y_coor));
+            double speed;
+            if ( (t - prevPoint.time) == 0 ) {
+                speed = prevPoint.speed;
+            }
+            else {
+                speed = positionDelta / (t - prevPoint.time);
+            }
+            
+            pnt = new Point(x,y,t,1,speed);
+        }
+        else {
+            pnt = new Point(x,y,t,1,0);
+        }
+        // Creating a point
+
 		currStroke.dataPoints.add(pnt);
 		this.repaint();		
 	}
@@ -166,6 +185,16 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
                                             }
                                             g2d.setColor(colors[band]);
                                         }
+                    // Catches NaN speeds
+                    if (!(p1.speed > 0)){
+                        if ((p.speed > 0)){
+                            p1.speed = p.speed;
+                        }
+                        else{
+                            p1.speed = 0;
+                        }
+                    }
+                    g2d.setStroke(new BasicStroke((float)(p1.speed * 5)));
 					g2d.drawLine(x,y,x1,y1);
 
 				}

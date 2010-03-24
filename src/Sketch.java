@@ -75,7 +75,7 @@ public class Sketch
 	     		        double x= Double.parseDouble(a.item(2).getNodeValue());
 	     		        double y= Double.parseDouble(a.item(3).getNodeValue());
 	     		        
-	     		        pointTable.put(id, new Point(x,y,t,1));
+	     		        pointTable.put(id, new Point(x,y,t,1,1));
 	     		            	
 	                  }         
 	                        

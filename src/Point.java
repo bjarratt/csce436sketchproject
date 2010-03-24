@@ -12,7 +12,9 @@ public class Point
 	double x_coor=0; // x co - ordinate
 	double y_coor=0; // y co - ordinate
 	double time =0; // time
-        double pressure = 0; //pressure
+    double pressure = 0; //pressure
+    double speed = 0;
+    
 	String id = ""; // Unique id
 
 
@@ -32,7 +34,8 @@ public class Point
 		x_coor=x;
 		y_coor=y;
 		time=t;
-                pressure=p;
+        pressure=p;
+        speed=0;
 		this.id = id;
 	}
 	
@@ -42,12 +45,13 @@ public class Point
 	 * @param y - y co ordinate
 	 * @param t - time component
 	 */
-	Point(double x, double y, double t, double p)
+	Point(double x, double y, double t, double p, double speed)
 	{
 		x_coor=x;
 		y_coor=y;
 		time=t;
-                pressure = p;
+        pressure = p;
+        this.speed = speed;
 		this.id = UUID.randomUUID().toString();
 	}
 
