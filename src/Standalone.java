@@ -191,8 +191,12 @@ class DrawFrame extends JFrame implements ActionListener
 
                             if(p1.rainbow)
                                 p1.rainbow = false;
-                            else
+                            else{
                                 p1.rainbow = true;
+                                p1.discoPen = false;
+                                 p1.colorBand = false;
+                            }
+                                
 
                 }
 
@@ -203,7 +207,11 @@ class DrawFrame extends JFrame implements ActionListener
                             if(p1.discoPen)
                                 p1.discoPen = false;
                             else
+                            {
                                 p1.discoPen = true;
+                                p1.rainbow = false;
+                                 p1.colorBand = false;
+                            }
 
                 }
 
@@ -214,7 +222,11 @@ class DrawFrame extends JFrame implements ActionListener
                             if(p1.colorBand)
                                 p1.colorBand = false;
                             else
+                            {
                                 p1.colorBand = true;
+                                p1.rainbow = false;
+                                p1.rainbow = false;
+                            }
 
                 }
 
