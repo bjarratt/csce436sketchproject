@@ -80,6 +80,41 @@ class DrawFrame extends JFrame implements ActionListener
 		menuItem.setActionCommand("save");
 		menuItem.addActionListener(this);
 		filemenu.add(menuItem);
+
+                menuItem = new MenuItem("Size Speed Option");
+		menuItem.setActionCommand("size speed option");
+		menuItem.addActionListener(this);
+		filemenu.add(menuItem);
+
+                 menuItem = new MenuItem("Rainbow");
+		menuItem.setActionCommand("rainbow");
+		menuItem.addActionListener(this);
+		filemenu.add(menuItem);
+
+                 menuItem = new MenuItem("Disco Pen");
+		menuItem.setActionCommand("disco pen");
+		menuItem.addActionListener(this);
+		filemenu.add(menuItem);
+
+                 menuItem = new MenuItem("Color Band");
+		menuItem.setActionCommand("color band");
+		menuItem.addActionListener(this);
+		filemenu.add(menuItem);
+
+                 menuItem = new MenuItem("Double Stroke");
+		menuItem.setActionCommand("double stroke");
+		menuItem.addActionListener(this);
+		filemenu.add(menuItem);
+
+                 menuItem = new MenuItem("Mirror Stroke");
+		menuItem.setActionCommand("mirror stroke");
+		menuItem.addActionListener(this);
+		filemenu.add(menuItem);
+
+                menuItem = new MenuItem("Clear Screen");
+		menuItem.setActionCommand("clear screen");
+		menuItem.addActionListener(this);
+		filemenu.add(menuItem);
 		
 		//Adding Exit Menu Item
 		menuItem = new MenuItem("Exit");
@@ -134,6 +169,83 @@ class DrawFrame extends JFrame implements ActionListener
 			}
 			
 		}
+                else if(arg0.getActionCommand().equalsIgnoreCase("Size Speed Option"))
+		{
+			// Save file dialog + Saving the sketch object into a file
+			
+                            if(p1.speedSize)
+                                p1.speedSize = false;
+                            else
+                                p1.speedSize = true;
+                       
+                }
+
+                else if(arg0.getActionCommand().equalsIgnoreCase("Rainbow"))
+		{
+			// Save file dialog + Saving the sketch object into a file
+
+                            if(p1.rainbow)
+                                p1.rainbow = false;
+                            else
+                                p1.rainbow = true;
+
+                }
+
+                else if(arg0.getActionCommand().equalsIgnoreCase("Disco Pen"))
+		{
+			// Save file dialog + Saving the sketch object into a file
+
+                            if(p1.discoPen)
+                                p1.discoPen = false;
+                            else
+                                p1.discoPen = true;
+
+                }
+
+                else if(arg0.getActionCommand().equalsIgnoreCase("Color Band"))
+		{
+			// Save file dialog + Saving the sketch object into a file
+
+                            if(p1.colorBand)
+                                p1.colorBand = false;
+                            else
+                                p1.colorBand = true;
+
+                }
+
+                else if(arg0.getActionCommand().equalsIgnoreCase("Double Stroke"))
+		{
+			// Save file dialog + Saving the sketch object into a file
+
+                            if(p1.doubleStroke)
+                                p1.doubleStroke = false;
+                            else
+                                p1.doubleStroke = true;
+
+                }
+
+                else if(arg0.getActionCommand().equalsIgnoreCase("Mirror Stroke"))
+		{
+			// Save file dialog + Saving the sketch object into a file
+
+                            if(p1.mirrorStroke)
+                                p1.mirrorStroke = false;
+                            else
+                                p1.mirrorStroke = true;
+
+                }
+
+                else if(arg0.getActionCommand().equalsIgnoreCase("Clear Screen"))
+		{
+			// Save file dialog + Saving the sketch object into a file
+
+                            p1.s.strokeList.clear();
+                            repaint();
+
+                }
+
+
+                
 		else if(arg0.getActionCommand().equalsIgnoreCase("Exit"))
 		{
 			System.exit(0);

@@ -22,13 +22,14 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
 	
 	Sketch s; // sketch object to record the strokes drawn
 
-        double jitter = 8;
+        double jitter = 0;
         int numSegmentsToClamp = -1;
         boolean rainbow = false;
-        boolean discoPen = true;
+        boolean discoPen = false;
         boolean colorBand = false;
         boolean doubleStroke = false;
         boolean mirrorStroke = false;
+        boolean speedSize = false;
 
         int colorsIndex = 0;
         Color[] colors = {Color.RED,Color.ORANGE,Color.YELLOW,Color.GREEN,Color.BLUE,Color.MAGENTA};
@@ -71,7 +72,8 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
         {
             if(s.strokeList.size() >0){
                 Stan.windowWidth = this.getWidth();
-                Stroke modifiedStroke = Stan.Morph(s.strokeList.get(s.strokeList.size()-1));
+                Stroke modifiedStroke = new Stroke();
+                modifiedStroke = Stan.Morph(s.strokeList.get(s.strokeList.size()-1));
                 modifiedStroke.calculateStartingAngles();
                 modifiedStroke.setVectors();
 
@@ -81,7 +83,7 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
                         modifiedStroke.getEuclideanDistance());
                 System.out.println("total stroke length: " +
                         modifiedStroke.getStrokeLength());
-                s.strokeList.set(s.strokeList.size()-1, modifiedStroke);
+                //s.strokeList.set(s.strokeList.size()-1, modifiedStroke);
                 System.out.println("average slope: " +
                         modifiedStroke.getAvgSlope());
                 System.out.println();
@@ -111,22 +113,27 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
 		Stroke currStroke = s.strokeList.get(s.strokeList.size()-1);
 
         Point pnt;
-        if (currStroke.dataPoints.size() > 0){
-            Point prevPoint = (currStroke.dataPoints.get(currStroke.dataPoints.size()-1));
-            double positionDelta = Math.sqrt((x-prevPoint.x_coor)*(x-prevPoint.x_coor) +
-                                             (y-prevPoint.y_coor)*(y-prevPoint.y_coor));
-            double speed;
-            if ( (t - prevPoint.time) == 0 ) {
-                speed = prevPoint.speed;
+        if(speedSize){
+            if (currStroke.dataPoints.size() > 0){
+                Point prevPoint = (currStroke.dataPoints.get(currStroke.dataPoints.size()-1));
+                double positionDelta = Math.sqrt((x-prevPoint.x_coor)*(x-prevPoint.x_coor) +
+                                                 (y-prevPoint.y_coor)*(y-prevPoint.y_coor));
+                double speed;
+                if ( (t - prevPoint.time) == 0 ) {
+                    speed = prevPoint.speed;
+                }
+                else {
+                    speed = positionDelta / (t - prevPoint.time);
+                }
+
+                pnt = new Point(x,y,t,1,speed);
             }
             else {
-                speed = positionDelta / (t - prevPoint.time);
-            }
-            
-            pnt = new Point(x,y,t,1,speed);
+            pnt = new Point(x,y,t,1,.5);
+        }
         }
         else {
-            pnt = new Point(x,y,t,1,0);
+            pnt = new Point(x,y,t,1,.5);
         }
         // Creating a point
 
