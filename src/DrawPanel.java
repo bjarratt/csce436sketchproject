@@ -73,7 +73,8 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
             if(s.strokeList.size() >0){
                 Stan.windowWidth = this.getWidth();
                 Stroke modifiedStroke = new Stroke();
-                modifiedStroke = Stan.Morph(s.strokeList.get(s.strokeList.size()-1));
+                modifiedStroke = s.strokeList.get(s.strokeList.size()-1);
+                modifiedStroke = Stan.Morph(modifiedStroke);
                 modifiedStroke.calculateStartingAngles();
                 modifiedStroke.setVectors();
 

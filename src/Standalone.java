@@ -111,6 +111,11 @@ class DrawFrame extends JFrame implements ActionListener
 		menuItem.addActionListener(this);
 		filemenu.add(menuItem);
 
+                menuItem = new MenuItem("Jitter");
+		menuItem.setActionCommand("jitter");
+		menuItem.addActionListener(this);
+		filemenu.add(menuItem);
+
                 menuItem = new MenuItem("Clear Screen");
 		menuItem.setActionCommand("clear screen");
 		menuItem.addActionListener(this);
@@ -217,6 +222,11 @@ class DrawFrame extends JFrame implements ActionListener
 		{
 			// Save file dialog + Saving the sketch object into a file
 
+                            if(p1.Stan.doubleStroke)
+                                p1.Stan.doubleStroke = false;
+                            else
+                                p1.Stan.doubleStroke = true;
+
                             if(p1.doubleStroke)
                                 p1.doubleStroke = false;
                             else
@@ -228,10 +238,26 @@ class DrawFrame extends JFrame implements ActionListener
 		{
 			// Save file dialog + Saving the sketch object into a file
 
+                            if(p1.Stan.mirrorStroke)
+                                p1.Stan.mirrorStroke = false;
+                            else
+                                p1.Stan.mirrorStroke = true;
+
                             if(p1.mirrorStroke)
                                 p1.mirrorStroke = false;
                             else
                                 p1.mirrorStroke = true;
+
+                }
+
+                else if(arg0.getActionCommand().equalsIgnoreCase("jitter"))
+		{
+			// Save file dialog + Saving the sketch object into a file
+
+                            if(p1.Stan.jitter>-0)
+                                p1.Stan.jitter = -0;
+                            else
+                                p1.Stan.jitter = 8;
 
                 }
 
