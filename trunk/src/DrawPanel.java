@@ -5,8 +5,6 @@ import java.io.File;
 
 import javax.swing.*;
 
-import jpen.*;
-
 /**
  * Simple sketch panel - to draw / record user sketch 
  * - only x , y , time data recorded

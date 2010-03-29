@@ -81,37 +81,37 @@ class DrawFrame extends JFrame implements ActionListener
 		menuItem.addActionListener(this);
 		filemenu.add(menuItem);
 
-                menuItem = new MenuItem("Size Speed Option");
+                menuItem = new MenuItem("[OFF] Size Speed Option");
 		menuItem.setActionCommand("size speed option");
 		menuItem.addActionListener(this);
 		filemenu.add(menuItem);
 
-                 menuItem = new MenuItem("Rainbow");
+                 menuItem = new MenuItem("[OFF] Rainbow");
 		menuItem.setActionCommand("rainbow");
 		menuItem.addActionListener(this);
 		filemenu.add(menuItem);
 
-                 menuItem = new MenuItem("Disco Pen");
+                 menuItem = new MenuItem("[OFF] Disco Pen");
 		menuItem.setActionCommand("disco pen");
 		menuItem.addActionListener(this);
 		filemenu.add(menuItem);
 
-                 menuItem = new MenuItem("Color Band");
+                 menuItem = new MenuItem("[OFF] Color Band");
 		menuItem.setActionCommand("color band");
 		menuItem.addActionListener(this);
 		filemenu.add(menuItem);
 
-                 menuItem = new MenuItem("Double Stroke");
+                 menuItem = new MenuItem("[OFF] Double Stroke");
 		menuItem.setActionCommand("double stroke");
 		menuItem.addActionListener(this);
 		filemenu.add(menuItem);
 
-                 menuItem = new MenuItem("Mirror Stroke");
+                 menuItem = new MenuItem("[OFF] Mirror Stroke");
 		menuItem.setActionCommand("mirror stroke");
 		menuItem.addActionListener(this);
 		filemenu.add(menuItem);
 
-                menuItem = new MenuItem("Jitter");
+                menuItem = new MenuItem("[OFF] Jitter");
 		menuItem.setActionCommand("jitter");
 		menuItem.addActionListener(this);
 		filemenu.add(menuItem);
@@ -140,7 +140,7 @@ class DrawFrame extends JFrame implements ActionListener
 
 	
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent arg0) {		
 		if(arg0.getActionCommand().equalsIgnoreCase("Open"))
 		{
 			// Open file dialog + loading the file into Sketch object
@@ -179,9 +179,13 @@ class DrawFrame extends JFrame implements ActionListener
 			// Save file dialog + Saving the sketch object into a file
 			
                             if(p1.speedSize)
+                            {
                                 p1.speedSize = false;
+                            }
                             else
+                            {
                                 p1.speedSize = true;
+                            }
                        
                 }
 
@@ -190,11 +194,14 @@ class DrawFrame extends JFrame implements ActionListener
 			// Save file dialog + Saving the sketch object into a file
 
                             if(p1.rainbow)
+                            {
                                 p1.rainbow = false;
-                            else{
+                            }
+                            else
+                            {
                                 p1.rainbow = true;
                                 p1.discoPen = false;
-                                 p1.colorBand = false;
+                                p1.colorBand = false;
                             }
                                 
 
@@ -205,12 +212,14 @@ class DrawFrame extends JFrame implements ActionListener
 			// Save file dialog + Saving the sketch object into a file
 
                             if(p1.discoPen)
+                            {
                                 p1.discoPen = false;
+                            }
                             else
                             {
                                 p1.discoPen = true;
                                 p1.rainbow = false;
-                                 p1.colorBand = false;
+                                p1.colorBand = false;
                             }
 
                 }
@@ -235,14 +244,24 @@ class DrawFrame extends JFrame implements ActionListener
 			// Save file dialog + Saving the sketch object into a file
 
                             if(p1.Stan.doubleStroke)
+                            {
                                 p1.Stan.doubleStroke = false;
+                            }
                             else
+                            {
                                 p1.Stan.doubleStroke = true;
+                                p1.Stan.mirrorStroke = false;
+                            }
 
                             if(p1.doubleStroke)
+                            {
                                 p1.doubleStroke = false;
+                            }
                             else
+                            {
                                 p1.doubleStroke = true;
+                                p1.mirrorStroke = false;
+                            }
 
                 }
 
@@ -251,14 +270,24 @@ class DrawFrame extends JFrame implements ActionListener
 			// Save file dialog + Saving the sketch object into a file
 
                             if(p1.Stan.mirrorStroke)
+                            {
                                 p1.Stan.mirrorStroke = false;
+                            }
                             else
+                            {
                                 p1.Stan.mirrorStroke = true;
+                                p1.Stan.doubleStroke = false;
+                            }
 
                             if(p1.mirrorStroke)
+                            {
                                 p1.mirrorStroke = false;
+                            }
                             else
+                            {
                                 p1.mirrorStroke = true;
+                                p1.doubleStroke = false;
+                            }
 
                 }
 
@@ -292,6 +321,35 @@ class DrawFrame extends JFrame implements ActionListener
 		{
 			System.out.println("Not a File Menu");
 		}
+		
+		int numMenuItemValues = 7;
+		int menuItemOffset = 2;
+		boolean menuItemValues[] = new boolean[numMenuItemValues];
+		menuItemValues[0] = p1.speedSize;
+		menuItemValues[1] = p1.rainbow;
+		menuItemValues[2] = p1.discoPen;
+		menuItemValues[3] = p1.colorBand;
+		menuItemValues[4] = p1.doubleStroke;
+		menuItemValues[5] = p1.mirrorStroke;
+		menuItemValues[6] = p1.jitter > 0;
+		
+		// Strip away [ON] and [OFF]
+		for (int i = 0; i < numMenuItemValues; i++)
+		{
+			String menuStr = this.filemenu.getItem(i + menuItemOffset).getLabel();
+			menuStr = menuStr.split(" ", 2)[1];
+			if (menuItemValues[i])
+			{
+				menuStr = "[ON] " + menuStr;
+			}
+			else
+			{
+				menuStr = "[OFF] " + menuStr;
+			}
+			this.filemenu.getItem(i + menuItemOffset).setLabel(menuStr);
+		}
+		
+		
 	}
 }
   	
