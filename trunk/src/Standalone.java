@@ -331,7 +331,7 @@ class DrawFrame extends JFrame implements ActionListener
 		menuItemValues[3] = p1.colorBand;
 		menuItemValues[4] = p1.doubleStroke;
 		menuItemValues[5] = p1.mirrorStroke;
-		menuItemValues[6] = p1.jitter > 0;
+		menuItemValues[6] = p1.Stan.jitter > 0;
 		
 		// Strip away [ON] and [OFF]
 		for (int i = 0; i < numMenuItemValues; i++)

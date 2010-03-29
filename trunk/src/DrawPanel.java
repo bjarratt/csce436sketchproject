@@ -86,12 +86,31 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
                 System.out.println("average slope: " +
                         modifiedStroke.getAvgSlope());
                 System.out.println();
+                
+                s.strokeList.set(s.strokeList.size()-1, modifiedStroke);
 
-                if(doubleStroke || mirrorStroke){
-                    s.strokeList.add(modifiedStroke);
+                if(doubleStroke){
+                	Stroke newStroke = new Stroke();
+                    for(int c = 0;c<modifiedStroke.dataPoints.size();c++){
+                        double newX = modifiedStroke.dataPoints.get(c).x_coor + 10;
+
+                        Point dataPoint = new Point(newX,modifiedStroke.dataPoints.get(c).y_coor,0,0,modifiedStroke.dataPoints.get(c).speed);
+                        newStroke.dataPoints.add(dataPoint);
+                    }
+                    s.strokeList.add(newStroke);
                 }
-                else
-                    s.strokeList.set(s.strokeList.size()-1, modifiedStroke);
+                else if (mirrorStroke)
+                {
+                    Stroke newStroke = new Stroke();
+
+                    for(int c = 0;c<modifiedStroke.dataPoints.size();c++){
+                        double newX = Stan.windowWidth - modifiedStroke.dataPoints.get(c).x_coor;
+
+                        Point dataPoint = new Point(newX,modifiedStroke.dataPoints.get(c).y_coor,0,0,modifiedStroke.dataPoints.get(c).speed);
+                        newStroke.dataPoints.add(dataPoint);
+                    }
+                    s.strokeList.add(newStroke);
+                }
             }
 
             this.repaint();
