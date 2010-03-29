@@ -19,7 +19,7 @@ public class Persona {
 
     boolean mirrorStroke = false;
 
-    int windowWidth = 0;
+    public int windowWidth = 0;
     Random rand = new Random();
 
     Persona(double jitter, int numSegmentsToClamp, boolean doubleStroke, boolean mirrorStroke){
@@ -164,19 +164,22 @@ public class Persona {
 
     public Stroke doubleStroke(Stroke s){
 
-        Stroke newStroke = new Stroke();
+        //Stroke newStroke = new Stroke();
 
+        /*
         for(int c = 0;c<s.dataPoints.size();c++){
             double newX = s.dataPoints.get(c).x_coor + 10;
 
             Point dataPoint = new Point(newX,s.dataPoints.get(c).y_coor,0,0,s.dataPoints.get(c).speed);
             newStroke.dataPoints.add(dataPoint);
         }
-        return newStroke;
+        */
+        return s;
     }
 
     public Stroke mirrorStroke(Stroke s){
 
+    	/*
         Stroke newStroke = new Stroke();
 
         for(int c = 0;c<s.dataPoints.size();c++){
@@ -185,6 +188,7 @@ public class Persona {
             Point dataPoint = new Point(newX,s.dataPoints.get(c).y_coor,0,0,s.dataPoints.get(c).speed);
             newStroke.dataPoints.add(dataPoint);
         }
-        return newStroke;
+        */
+        return s;
     }
 }
